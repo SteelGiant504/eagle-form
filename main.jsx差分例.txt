@@ -1,0 +1,9 @@
+src/main.jsx の送信ボタン直後に追加：
+
+<a className="change-link" href="/change.html">変更・お取消しはこちら</a>
+
+例：
+<button className="submit" disabled={state==="sending"}>
+  {state==="sending" ? "送信しています…" : "回答を送信"}
+</button>
+<a className="change-link" href="/change.html">変更・お取消しはこちら</a>
