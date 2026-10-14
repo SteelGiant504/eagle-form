@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+  <title>イーグル会 回答データ出力</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f1f5f9;
+      color: #172033;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Noto Sans JP",
+        sans-serif;
+    }
+
+    header {
+      padding: 45px 20px 90px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #022c22, #047857);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(25px, 5vw, 38px);
+    }
+
+    main {
+      width: min(560px, calc(100% - 32px));
+      margin: -55px auto 50px;
+    }
+
+    .card {
+      padding: 28px;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.15);
+    }
+
+    h2 {
+      margin-top: 0;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .description {
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    label {
+      display: block;
+      margin: 22px 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      min-height: 50px;
+      padding: 0 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #047857;
+      outline: 3px solid #d1fae5;
+    }
+
+    button {
+      width: 100%;
+      min-height: 54px;
+      margin-top: 24px;
+      border: 0;
+      border-radius: 14px;
+      background: #047857;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #065f46;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.6;
+    }
+
+    .error {
+      padding: 12px;
+      margin-top: 16px;
+      border-radius: 10px;
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .back {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: #475569;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>事務局用 回答データ出力</h1>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Excel形式でダウンロード</h2>
+
+      <p class="description">
+        Netlifyに設定した管理者パスワードを入力してください。
+        保存されている回答をExcel形式でダウンロードします。
+      </p>
+
+      <label for="password">管理者パスワード</label>
+
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+      >
+
+      <p id="message" class="error" hidden></p>
+
+      <button id="downloadButton" type="button">
+        Excelをダウンロード
+      </button>
+    </section>
+
+    <a class="back" href="/">
+      回答フォームへ戻る
+    </a>
+  </main>
+
+  <script>
+    const button = document.getElementById("downloadButton");
+    const password = document.getElementById("password");
+    const message = document.getElementById("message");
+
+    button.addEventListener("click", async () => {
+      message.hidden = true;
+
+      if (!password.value) {
+        message.textContent =
+          "管理者パスワードを入力してください。";
+        message.hidden = false;
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Excelを作成しています…";
+
+      try {
+        const response = await fetch(
+          "/.netlify/functions/export",
+          {
+            method: "GET",
+            headers: {
+              "X-Admin-Password": password.value
+            }
+          }
+        );
+
+        if (!response.ok) {
+          let errorMessage =
+            "Excelをダウンロードできませんでした。";
+
+          try {
+            const data = await response.json();
+
+            if (data.error) {
+              errorMessage = data.error;
+            }
+          } catch {
+            // JSONではないエラーの場合は既定メッセージを使います。
+          }
+
+          throw new Error(errorMessage);
+        }
+
+        const blob = await response.blob();
+        const downloadUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = downloadUrl;
+        link.download = "イーグル会回答一覧.xlsx";
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        URL.revokeObjectURL(downloadUrl);
+      } catch (error) {
+        message.textContent = error.message;
+        message.hidden = false;
+      } finally {
+        button.disabled = false;
+        button.textContent = "Excelをダウンロード";
+      }
+    });
+  </script>
+</body>
+</html>
