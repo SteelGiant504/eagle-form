@@ -1,225 +1,37 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
-  <title>イーグル会 回答データ出力</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: #f1f5f9;
-      color: #172033;
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        "Noto Sans JP",
-        sans-serif;
-    }
-
-    header {
-      padding: 45px 20px 90px;
-      text-align: center;
-      color: white;
-      background: linear-gradient(135deg, #022c22, #047857);
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: clamp(25px, 5vw, 38px);
-    }
-
-    main {
-      width: min(560px, calc(100% - 32px));
-      margin: -55px auto 50px;
-    }
-
-    .card {
-      padding: 28px;
-      background: white;
-      border-radius: 24px;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.15);
-    }
-
-    h2 {
-      margin-top: 0;
-      padding-bottom: 14px;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    .description {
-      color: #64748b;
-      line-height: 1.7;
-    }
-
-    label {
-      display: block;
-      margin: 22px 0 8px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    input {
-      width: 100%;
-      min-height: 50px;
-      padding: 0 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      font-size: 16px;
-    }
-
-    input:focus {
-      border-color: #047857;
-      outline: 3px solid #d1fae5;
-    }
-
-    button {
-      width: 100%;
-      min-height: 54px;
-      margin-top: 24px;
-      border: 0;
-      border-radius: 14px;
-      background: #047857;
-      color: white;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #065f46;
-    }
-
-    button:disabled {
-      cursor: wait;
-      opacity: 0.6;
-    }
-
-    .error {
-      padding: 12px;
-      margin-top: 16px;
-      border-radius: 10px;
-      background: #fef2f2;
-      color: #b91c1c;
-    }
-
-    .back {
-      display: block;
-      margin-top: 20px;
-      text-align: center;
-      color: #475569;
-    }
-  </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>イーグル会 回答管理</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;color:#172033;background:#f1f5f9}*{box-sizing:border-box}body{margin:0}header{background:linear-gradient(135deg,#022c22,#047857);color:#fff;text-align:center;padding:34px 16px 75px}header h1{margin:0;font-size:clamp(25px,5vw,38px)}header p{margin:10px 0 0;color:#d1fae5}main{max-width:1100px;margin:-44px auto 50px;padding:0 14px}.card{background:#fff;border-radius:22px;padding:clamp(18px,4vw,30px);box-shadow:0 16px 42px #0f172a20;margin-bottom:18px}.login{max-width:520px;margin-inline:auto}h2{margin:0 0 18px;border-bottom:1px solid #e2e8f0;padding-bottom:12px}label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}input,select{width:100%;min-height:44px;border:1px solid #cbd5e1;border-radius:10px;padding:0 12px;font-size:16px;background:#fff}button{border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}.primary{background:#047857;color:#fff}.secondary{background:#e2e8f0;color:#172033}.danger{background:#fee2e2;color:#b91c1c}.toolbar{display:grid;grid-template-columns:1fr 180px auto auto;gap:10px;align-items:end}.status{margin:12px 0;padding:11px 13px;border-radius:10px;background:#ecfdf5;color:#065f46}.error{background:#fef2f2;color:#b91c1c}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:15px 0}.metric{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center}.metric strong{display:block;font-size:24px;color:#065f46}.tablewrap{overflow:auto;border:1px solid #e2e8f0;border-radius:12px}table{width:100%;border-collapse:collapse;min-width:850px}th,td{padding:11px;border-bottom:1px solid #e2e8f0;text-align:left;font-size:14px}th{background:#f8fafc;position:sticky;top:0}.actions{display:flex;gap:7px}.hidden{display:none!important}.modal{position:fixed;inset:0;background:#0f172a99;display:grid;place-items:center;padding:14px;z-index:10}.dialog{background:#fff;border-radius:18px;padding:22px;width:min(720px,100%);max-height:92vh;overflow:auto}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.person{background:#f8fafc;border:1px solid #e2e8f0;padding:13px;border-radius:12px;margin-top:12px}.dialog-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}.toplink{display:block;text-align:center;color:#475569;margin-top:18px}.muted{color:#64748b;font-size:13px}@media(max-width:720px){.toolbar{grid-template-columns:1fr 1fr}.toolbar .wide{grid-column:1/-1}.summary{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.card{border-radius:16px}}
+</style>
 </head>
-
 <body>
-  <header>
-    <h1>事務局用 回答データ出力</h1>
-  </header>
-
-  <main>
-    <section class="card">
-      <h2>Excel形式でダウンロード</h2>
-
-      <p class="description">
-        Netlifyに設定した管理者パスワードを入力してください。
-        保存されている回答をExcel形式でダウンロードします。
-      </p>
-
-      <label for="password">管理者パスワード</label>
-
-      <input
-        id="password"
-        type="password"
-        autocomplete="current-password"
-      >
-
-      <p id="message" class="error" hidden></p>
-
-      <button id="downloadButton" type="button">
-        Excelをダウンロード
-      </button>
-    </section>
-
-    <a class="back" href="/">
-      回答フォームへ戻る
-    </a>
-  </main>
-
-  <script>
-    const button = document.getElementById("downloadButton");
-    const password = document.getElementById("password");
-    const message = document.getElementById("message");
-
-    button.addEventListener("click", async () => {
-      message.hidden = true;
-
-      if (!password.value) {
-        message.textContent =
-          "管理者パスワードを入力してください。";
-        message.hidden = false;
-        return;
-      }
-
-      button.disabled = true;
-      button.textContent = "Excelを作成しています…";
-
-      try {
-        const response = await fetch(
-          "/.netlify/functions/export",
-          {
-            method: "GET",
-            headers: {
-              "X-Admin-Password": password.value
-            }
-          }
-        );
-
-        if (!response.ok) {
-          let errorMessage =
-            "Excelをダウンロードできませんでした。";
-
-          try {
-            const data = await response.json();
-
-            if (data.error) {
-              errorMessage = data.error;
-            }
-          } catch {
-            // JSONではないエラーの場合は既定メッセージを使います。
-          }
-
-          throw new Error(errorMessage);
-        }
-
-        const blob = await response.blob();
-        const downloadUrl = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-
-        link.href = downloadUrl;
-        link.download = "イーグル会回答一覧.xlsx";
-
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-        URL.revokeObjectURL(downloadUrl);
-      } catch (error) {
-        message.textContent = error.message;
-        message.hidden = false;
-      } finally {
-        button.disabled = false;
-        button.textContent = "Excelをダウンロード";
-      }
-    });
-  </script>
-</body>
-</html>
+<header><h1>事務局用 回答管理</h1><p>イーグル会出欠回答フォーム</p></header>
+<main>
+<section id="login" class="card login"><h2>管理者ログイン</h2><p class="muted">Netlifyの環境変数「ADMIN_PASSWORD」に設定したパスワードを入力してください。</p><label for="password">管理者パスワード</label><input id="password" type="password" autocomplete="current-password"><button id="loginButton" class="primary" style="width:100%;margin-top:16px">回答一覧を表示</button><p id="loginMessage" class="status error hidden"></p></section>
+<section id="manager" class="card hidden"><h2>回答一覧</h2>
+<div class="toolbar"><div class="wide"><label for="search">検索</label><input id="search" placeholder="御社名・代表者名・参加者名"></div><div><label for="attendanceFilter">出欠</label><select id="attendanceFilter"><option value="">すべて</option><option>出席</option><option>欠席</option></select></div><button id="reload" class="secondary">再読込</button><button id="excel" class="primary">Excel出力</button></div>
+<div class="summary"><div class="metric">回答件数<strong id="totalCount">0</strong></div><div class="metric">出席回答<strong id="presentCount">0</strong></div><div class="metric">宿泊者数<strong id="stayCount">0</strong></div><div class="metric">ゴルフ参加<strong id="golfCount">0</strong></div></div>
+<p id="message" class="status hidden"></p>
+<div class="tablewrap"><table><thead><tr><th>受付日時</th><th>出欠</th><th>御社名</th><th>代表者</th><th>人数</th><th>宿泊</th><th>ゴルフ</th><th>操作</th></tr></thead><tbody id="rows"></tbody></table></div>
+</section><a class="toplink" href="/">回答フォームへ戻る</a>
+</main>
+<div id="modal" class="modal hidden"><form id="editForm" class="dialog"><h2>回答の詳細・編集</h2><input id="editId" type="hidden"><div class="grid2"><div><label>出欠</label><select id="editAttendance"><option>出席</option><option>欠席</option></select></div><div><label>ご人数</label><select id="editCount"><option>1</option><option>2</option><option>3</option><option>4</option></select></div><div><label>御社名</label><input id="editCompany" required></div><div><label>代表者名</label><input id="editRepresentative" required></div></div><label>代表者メールアドレス</label><input id="editEmail" type="email" required><div id="participants"></div><p id="editMessage" class="status error hidden"></p><div class="dialog-actions"><button type="button" id="cancel" class="secondary">キャンセル</button><button class="primary">変更を保存</button></div></form></div>
+<script>
+const $=s=>document.querySelector(s);let password="",responses=[];
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function localDate(v){if(!v)return "";return new Intl.DateTimeFormat("ja-JP",{dateStyle:"short",timeStyle:"short",timeZone:"Asia/Tokyo"}).format(new Date(v))}
+async function api(method="GET",body,url="/.netlify/functions/admin-responses"){const r=await fetch(url,{method,headers:{"X-Admin-Password":password,...(body?{"Content-Type":"application/json"}:{})},body:body?JSON.stringify(body):undefined});if(!r.ok){let m="処理に失敗しました。";try{m=(await r.json()).error||m}catch{}throw new Error(m)}return r}
+function notice(text,error=false){const e=$("#message");e.textContent=text;e.className="status"+(error?" error":"");e.classList.remove("hidden")}
+async function load(){notice("回答を読み込んでいます…");try{responses=(await (await api()).json()).responses;$("#login").classList.add("hidden");$("#manager").classList.remove("hidden");$("#message").classList.add("hidden");render()}catch(e){$("#loginMessage").textContent=e.message;$("#loginMessage").classList.remove("hidden")}}
+function render(){const q=$("#search").value.trim().toLowerCase(),f=$("#attendanceFilter").value;const list=responses.filter(r=>(!f||r.attendance===f)&&(!q||[r.company,r.representative,...(r.participants||[]).map(p=>p.name)].join(" ").toLowerCase().includes(q)));$("#rows").innerHTML=list.length?list.map(r=>`<tr><td>${esc(localDate(r.submittedAt))}</td><td>${esc(r.attendance)}</td><td>${esc(r.company)}</td><td>${esc(r.representative)}</td><td>${r.participantCount||0}</td><td>${r.totals?.stay||0}</td><td>${r.totals?.golf||0}</td><td><div class="actions"><button class="secondary" data-edit="${esc(r.id)}">編集</button><button class="danger" data-delete="${esc(r.id)}">削除</button></div></td></tr>`).join(""):`<tr><td colspan="8">該当する回答はありません。</td></tr>`;$("#totalCount").textContent=responses.length;$("#presentCount").textContent=responses.filter(r=>r.attendance==="出席").length;$("#stayCount").textContent=responses.reduce((n,r)=>n+(r.totals?.stay||0),0);$("#golfCount").textContent=responses.reduce((n,r)=>n+(r.totals?.golf||0),0)}
+function participantFields(r,count){$("#participants").innerHTML=Array.from({length:count},(_,i)=>{const p=r.participants?.[i]||{name:"",stay:"無し",golf:"無し"};return `<div class="person"><strong>参加者 ${i+1}</strong><label>参加者名</label><input class="pname" value="${esc(p.name)}" required><div class="grid2"><div><label>宿泊</label><select class="pstay"><option ${p.stay==="有り"?"selected":""}>有り</option><option ${p.stay!=="有り"?"selected":""}>無し</option></select></div><div><label>ゴルフ</label><select class="pgolf"><option ${p.golf==="有り"?"selected":""}>有り</option><option ${p.golf!=="有り"?"selected":""}>無し</option></select></div></div></div>`}).join("")}
+function openEdit(id){const r=responses.find(x=>x.id===id);if(!r)return;$("#editId").value=r.id;$("#editAttendance").value=r.attendance;$("#editCompany").value=r.company;$("#editRepresentative").value=r.representative;$("#editEmail").value=r.representativeEmail;$("#editCount").value=Math.max(1,r.participantCount||1);$("#editCount").disabled=r.attendance==="欠席";participantFields(r,Number($("#editCount").value));$("#participants").classList.toggle("hidden",r.attendance==="欠席");$("#editMessage").classList.add("hidden");$("#modal").classList.remove("hidden")}
+$("#loginButton").onclick=()=>{password=$("#password").value;load()};$("#password").onkeydown=e=>{if(e.key==="Enter")$("#loginButton").click()};$("#reload").onclick=load;$("#search").oninput=render;$("#attendanceFilter").onchange=render;$("#cancel").onclick=()=>$("#modal").classList.add("hidden");$("#editCount").onchange=()=>{const r=responses.find(x=>x.id===$("#editId").value)||{};participantFields(r,Number($("#editCount").value))};$("#editAttendance").onchange=()=>{const absent=$("#editAttendance").value==="欠席";$("#editCount").disabled=absent;$("#participants").classList.toggle("hidden",absent)};
+$("#rows").onclick=async e=>{const edit=e.target.dataset.edit,del=e.target.dataset.delete;if(edit)openEdit(edit);if(del&&confirm("この回答を完全に削除します。元に戻せません。よろしいですか？")){try{await api("DELETE",null,"/.netlify/functions/admin-responses?id="+encodeURIComponent(del));notice("回答を削除しました。");await load()}catch(x){notice(x.message,true)}}};
+$("#editForm").onsubmit=async e=>{e.preventDefault();const attendance=$("#editAttendance").value;const people=attendance==="出席"?[...document.querySelectorAll(".person")].map(x=>({name:x.querySelector(".pname").value,stay:x.querySelector(".pstay").value,golf:x.querySelector(".pgolf").value})):[];const body={id:$("#editId").value,attendance,company:$("#editCompany").value,representative:$("#editRepresentative").value,representativeEmail:$("#editEmail").value,participants:people};try{await api("PUT",body);$("#modal").classList.add("hidden");notice("変更を保存しました。");await load()}catch(x){$("#editMessage").textContent=x.message;$("#editMessage").classList.remove("hidden")}};
+$("#excel").onclick=async()=>{try{const r=await api("GET",null,"/.netlify/functions/export"),blob=await r.blob(),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="イーグル会回答一覧.xlsx";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}catch(x){notice(x.message,true)}};
+</script>
+</body></html>
